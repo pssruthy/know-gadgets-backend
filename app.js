@@ -19,4 +19,10 @@ app.get('/api/getGadgetDetails/:id', (req, res) => {
   res.send(JSON.stringify(details));
 });
 
+app.get('/api/getReviews/:id', (req, res) => {
+  const { id } = req.params;
+  const reviewsOfGadget = app.locals.reviews[id];
+  res.send(JSON.stringify({ reviews: reviewsOfGadget }));
+});
+
 module.exports = app;
