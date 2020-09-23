@@ -1,0 +1,138 @@
+{
+  "gadgets": [
+    {
+      "id": 1,
+      "manufacturer": "JBL",
+      "gadget": "Headphone",
+      "model": "TFNAS",
+      "imgUrl": "https://images-na.ssl-images-amazon.com/images/I/612Rldd5TuL._SL1500_.jpg",
+      "rate": 3,
+      "ratingCount": 16
+    },
+    {
+      "id": 2,
+      "manufacturer": "Boat",
+      "gadget": "Headphone",
+      "model": "ITF 457",
+      "rate": 5,
+      "imgUrl": "https://vlebazaar.in/image/cache/catalog//B01M9C51T9/boAt-BassHeads-225-in-Ear-Super-Extra-Bass-Headphones-Black-B01M9C51T9-1500x1500.jpg",
+      "ratingCount": 1
+    },
+    {
+      "id": 3,
+      "manufacturer": "Whirlpool",
+      "gadget": "Washing machine",
+      "model": "33",
+      "rate": 3,
+      "imgUrl": "https://image1.pricedekho.com/p/61/8/28/61828/160482-whirlpool-agitronic-702sd-top-load-automatic-7-kg-washing-machine-black-chrome-picture-large.jpg",
+      "ratingCount": 10
+    },
+    {
+      "id": 4,
+      "manufacturer": "Samsung",
+      "gadget": "Smartphone",
+      "model": "A51",
+      "rate": 4,
+      "imgUrl": "https://images-na.ssl-images-amazon.com/images/I/61sAKMokIUL._AC_SL1000_.jpg",
+      "ratingCount": 20
+    },
+    {
+      "id": 5,
+      "manufacturer": "JBL",
+      "gadget": "Headphone",
+      "model": "TFNAS",
+      "imgUrl": "https://images-na.ssl-images-amazon.com/images/I/612Rldd5TuL._SL1500_.jpg",
+      "rate": 3,
+      "ratingCount": 16
+    },
+    {
+      "id": 6,
+      "manufacturer": "Boat",
+      "gadget": "Headphone",
+      "model": "ITF 457",
+      "rate": 5,
+      "imgUrl": "https://vlebazaar.in/image/cache/catalog//B01M9C51T9/boAt-BassHeads-225-in-Ear-Super-Extra-Bass-Headphones-Black-B01M9C51T9-1500x1500.jpg",
+      "ratingCount": 1
+    },
+    {
+      "id": 7,
+      "manufacturer": "Whirlpool",
+      "gadget": "Washing machine",
+      "model": "33",
+      "rate": 3,
+      "imgUrl": "https://image1.pricedekho.com/p/61/8/28/61828/160482-whirlpool-agitronic-702sd-top-load-automatic-7-kg-washing-machine-black-chrome-picture-large.jpg",
+      "ratingCount": 10
+    },
+    {
+      "id": 8,
+      "manufacturer": "Samsung",
+      "gadget": "Smartphone",
+      "model": "A51",
+      "rate": 4,
+      "imgUrl": "https://images-na.ssl-images-amazon.com/images/I/61sAKMokIUL._AC_SL1000_.jpg",
+      "ratingCount": 20
+    }
+  ],
+  "reviews": {
+    "1": [
+      {
+        "rating": 4,
+        "review": "This is a good one",
+        "user": "pssruthy",
+        "id": 1
+      },
+      {
+        "rating": 4,
+        "review": "Sound is not good",
+        "user": "pssruthy",
+        "id": 2
+      },
+      {
+        "rating": 2,
+        "review": "This is a good one",
+        "user": "pssruthy",
+        "id": 3
+      }
+    ],
+    "2": [
+      {
+        "rating": 4,
+        "review": "This is a good one",
+        "user": "pssruthy",
+        "id": 5
+      }
+    ],
+    "3": [
+      {
+        "rating": 5,
+        "review": "This is a good one",
+        "user": "pssruthy",
+        "id": 4
+      },
+      {
+        "rating": 1,
+        "review": "Taking too much time",
+        "user": "pssruthy",
+        "id": 6
+      }
+    ],
+    "4": [],
+    "5": [],
+    "6": [
+      {
+        "rating": 1,
+        "review": "This is a good one",
+        "user": "pssruthy",
+        "id": 7
+      },
+      {
+        "rating": 3,
+        "review": "This is a good one",
+        "user": "pssruthy",
+        "id": 8
+      }
+    ],
+    "7": [],
+    "8": []
+  }
+}
