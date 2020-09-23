@@ -1,5 +1,21 @@
+const getRating = (reviewDetails) => {
+  const totalRating = reviewDetails.reduce(
+    (context, { rating }) => context + rating,
+    0
+  );
+  const ratingCount = reviewDetails.length;
+  const avgRating = totalRating / ratingCount;
+  const rating = isNaN(avgRating) ? 0 : avgRating;
+  return { rate: Math.round(rating * 10) / 10, ratingCount };
+};
+
 const getGadgets = (req, res) => {
-  res.send(JSON.stringify({ gadgets: req.app.locals.gadgets }));
+  const gadgets = req.app.locals.gadgets;
+  const reviews = req.app.locals.reviews;
+  const gadgetDetails = gadgets.map((gadget) => {
+    return { ...gadget, ...getRating(reviews[gadget.id]) };
+  });
+  res.send(JSON.stringify({ gadgets: gadgetDetails }));
 };
 
 const getGadgetDetails = (req, res) => {
@@ -7,7 +23,8 @@ const getGadgetDetails = (req, res) => {
   const details = req.app.locals.gadgets.find(
     (detail) => `${detail.id}` === `${id}`
   );
-  res.send(JSON.stringify(details));
+  const review = req.app.locals.reviews[details.id];
+  res.send(JSON.stringify({ ...details, ...getRating(review) }));
 };
 
 const getReviews = (req, res) => {
