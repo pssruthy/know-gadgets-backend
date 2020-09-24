@@ -52,12 +52,17 @@ const addGadget = (req, res) => {
   const details = req.body;
   const { gadgets, gadgetLastId, reviews } = req.app.locals;
   const lastId = gadgetLastId + 1;
+
+  const { img } = req.files || { image: {} };
+  const imageName = `image-${lastId}.jpg`;
+  const location = `./public/assets/${imageName}`;
+  img.mv && img.mv(location);
+
   req.app.locals.gadgetLastId = lastId;
   gadgets.push({
     ...details,
     id: lastId,
-    imgUrl:
-      'https://vlebazaar.in/image/cache/catalog//B01M9C51T9/boAt-BassHeads-225-in-Ear-Super-Extra-Bass-Headphones-Black-B01M9C51T9-1500x1500.jpg',
+    imgUrl: `/assets/${imageName}`,
   });
   reviews[lastId] = [];
   res.send({ id: lastId });
