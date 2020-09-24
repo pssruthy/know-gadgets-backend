@@ -4,14 +4,16 @@ const app = express();
 app.use(express.json());
 
 const handlers = require('./handlers');
-const { reviews, gadgets } = require('./data.json');
+const { reviews, gadgets, gadgetLastId } = require('./data.json');
 app.locals.gadgets = gadgets;
 app.locals.reviews = reviews;
+app.locals.gadgetLastId = gadgetLastId;
 
 app.get('/api/getGadgets', handlers.getGadgets);
 app.get('/api/getGadgetDetails/:id', handlers.getGadgetDetails);
 app.get('/api/getReviews/:id', handlers.getReviews);
 
 app.post('/api/addReview', handlers.addReview);
+app.post('/api/addGadget', handlers.addGadget);
 
 module.exports = app;

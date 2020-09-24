@@ -48,4 +48,26 @@ const addReview = (req, res) => {
   res.end();
 };
 
-module.exports = { getGadgets, getGadgetDetails, getReviews, addReview };
+const addGadget = (req, res) => {
+  const details = req.body;
+  const { gadgets, gadgetLastId, reviews } = req.app.locals;
+  const lastId = gadgetLastId + 1;
+  req.app.locals.gadgetLastId = lastId;
+  gadgets.push({
+    ...details,
+    id: lastId,
+    imgUrl:
+      'https://vlebazaar.in/image/cache/catalog//B01M9C51T9/boAt-BassHeads-225-in-Ear-Super-Extra-Bass-Headphones-Black-B01M9C51T9-1500x1500.jpg',
+  });
+  console.log(req.app.locals.gadgets);
+  reviews[lastId] = [];
+  res.send({ id: lastId });
+};
+
+module.exports = {
+  getGadgets,
+  getGadgetDetails,
+  getReviews,
+  addReview,
+  addGadget,
+};
