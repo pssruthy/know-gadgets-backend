@@ -1,3 +1,5 @@
+const app = require('./app');
+
 const getRating = (reviewDetails) => {
   const totalRating = reviewDetails.reduce(
     (context, { rating }) => context + rating,
@@ -33,4 +35,17 @@ const getReviews = (req, res) => {
   res.send(JSON.stringify({ reviews: reviewsOfGadget }));
 };
 
-module.exports = { getGadgets, getGadgetDetails, getReviews };
+const addReview = (req, res) => {
+  const { id, rating, review } = req.body;
+  const reviewList = req.app.locals.reviews;
+  reviewList.lastId = reviewList.lastId + 1;
+  reviewList[id].push({
+    id: reviewList.lastId,
+    rating,
+    review,
+    user: 'sruthy',
+  });
+  res.end();
+};
+
+module.exports = { getGadgets, getGadgetDetails, getReviews, addReview };

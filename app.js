@@ -12,4 +12,6 @@ app.get('/api/getGadgets', handlers.getGadgets);
 app.get('/api/getGadgetDetails/:id', handlers.getGadgetDetails);
 app.get('/api/getReviews/:id', handlers.getReviews);
 
+app.post('/api/addReview', handlers.addReview);
+
 module.exports = app;
