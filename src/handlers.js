@@ -1,4 +1,6 @@
-const app = require('./app');
+const config = require('../config');
+const authUtils = require('./authUtils');
+const { generateSessionId } = require('./session');
 
 const getRating = (reviewDetails) => {
   const totalRating = reviewDetails.reduce(
@@ -68,10 +70,54 @@ const addGadget = (req, res) => {
   res.send({ id: lastId });
 };
 
+const getAuthLink = (req, res) => {
+  const link = config.getAuthLink();
+  res.send({ link });
+};
+
+const confirmUser = (req, res) => {
+  const { code } = req.query;
+  authUtils
+    .getAccessToken(code)
+    .then(authUtils.getUserDetail)
+    .then(({ login, avatar_url }) => {
+      const user = req.app.locals.users[login];
+      if (!user) {
+        req.app.locals.users[login] = { user: login, avatar_url };
+      }
+      const session = generateSessionId();
+      req.app.locals.sessions[session] = login;
+      res.cookie('sId', session);
+      res.redirect('http://localhost:3000/latest');
+    });
+};
+
+const authorizeUser = function (req, res, next) {
+  const sessions = req.app.locals.sessions;
+  const user = sessions[req.cookies.sId];
+  if (!user) {
+    res.sendStatus(401);
+    res.end();
+    return;
+  }
+  req.user = user;
+  next();
+};
+
+const getUser = (req, res) => {
+  const user = req.user;
+  const userDetails = req.app.locals.users[user];
+  res.send({ details: userDetails });
+};
+
 module.exports = {
   getGadgets,
   getGadgetDetails,
   getReviews,
   addReview,
   addGadget,
+  getAuthLink,
+  confirmUser,
+  authorizeUser,
+  getUser,
 };
