@@ -33,5 +33,6 @@ app.get('/api/getUser', handlers.getUser);
 
 app.post('/api/addReview', handlers.addReview);
 app.post('/api/addGadget', handlers.addGadget);
+app.get('/api/logout', handlers.logout);
 
 module.exports = app;

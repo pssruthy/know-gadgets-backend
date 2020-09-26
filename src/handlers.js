@@ -19,7 +19,7 @@ const getGadgets = (req, res) => {
   const gadgetDetails = gadgets.map((gadget) => {
     return { ...gadget, ...getRating(reviews[gadget.id]) };
   });
-  res.send(JSON.stringify({ gadgets: gadgetDetails }));
+  res.send(JSON.stringify({ gadgets: gadgetDetails.reverse() }));
 };
 
 const getGadgetDetails = (req, res) => {
@@ -39,13 +39,14 @@ const getReviews = (req, res) => {
 
 const addReview = (req, res) => {
   const { id, rating, review } = req.body;
+  const { user } = req;
   const reviewList = req.app.locals.reviews;
   reviewList.lastId = reviewList.lastId + 1;
   reviewList[id].push({
     id: reviewList.lastId,
     rating,
     review,
-    user: 'sruthy',
+    user,
   });
   res.end();
 };
@@ -88,7 +89,7 @@ const confirmUser = (req, res) => {
       const session = generateSessionId();
       req.app.locals.sessions[session] = login;
       res.cookie('sId', session);
-      res.redirect('http://localhost:3000/latest');
+      res.redirect('http://localhost:3000/');
     });
 };
 
@@ -110,6 +111,14 @@ const getUser = (req, res) => {
   res.send({ details: userDetails });
 };
 
+const logout = (req, res) => {
+  const { sessions } = req.app.locals;
+  const sId = req.cookies.sId;
+  delete sessions[sId];
+  res.clearCookie('sId');
+  res.end();
+};
+
 module.exports = {
   getGadgets,
   getGadgetDetails,
@@ -120,4 +129,5 @@ module.exports = {
   confirmUser,
   authorizeUser,
   getUser,
+  logout,
 };
