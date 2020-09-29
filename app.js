@@ -1,16 +1,35 @@
 const express = require('express');
+const redis = require('redis');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
+const handlers = require('./src/handlers');
+const Db = require('./db');
 
 const app = express();
+const REDIS_URL = process.env.REDIS_URL || 6379;
+const redisClient = redis.createClient(REDIS_URL);
+const db = new Db(redisClient);
 
-const handlers = require('./src/handlers');
-const { reviews, gadgets, gadgetLastId } = require('./data.json');
-app.locals.gadgets = gadgets;
-app.locals.reviews = reviews;
-app.locals.gadgetLastId = gadgetLastId;
+app.locals.db = db;
 app.locals.sessions = {};
-app.locals.users = {};
+
+db.getGadgets().then((gadgets) => {
+  app.locals.gadgets = gadgets || [];
+});
+
+db.getReviews().then((reviews) => {
+  app.locals.reviews = reviews || {};
+});
+
+db.getUsers().then((users) => {
+  app.locals.users = users || {};
+});
+
+db.getGadgetLastId().then((lastId) => {
+  app.locals.gadgetLastId = lastId || 0;
+});
+
+app.locals.sessions = {};
 
 app.use(express.json());
 app.use(express.static('public'));

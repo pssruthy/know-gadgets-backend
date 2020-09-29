@@ -48,6 +48,7 @@ const addReview = (req, res) => {
     review,
     user,
   });
+  req.app.locals.db.setReviews(reviewList);
   res.end();
 };
 
@@ -68,6 +69,9 @@ const addGadget = (req, res) => {
     imgUrl: `/assets/${imageName}`,
   });
   reviews[lastId] = [];
+  req.app.locals.db.setGadgetLastId(lastId);
+  req.app.locals.db.setGadgets(gadgets);
+  req.app.locals.db.setReviews(reviews);
   res.send({ id: lastId });
 };
 
@@ -85,6 +89,7 @@ const confirmUser = (req, res) => {
       const user = req.app.locals.users[login];
       if (!user) {
         req.app.locals.users[login] = { user: login, avatar_url };
+        req.app.locals.db.setUsers(req.app.locals.users);
       }
       const session = generateSessionId();
       req.app.locals.sessions[session] = login;
