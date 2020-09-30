@@ -32,6 +32,7 @@ db.getGadgetLastId().then((lastId) => {
 app.locals.sessions = {};
 
 app.use(express.json());
+app.use(express.static('build'));
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

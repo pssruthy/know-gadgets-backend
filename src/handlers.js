@@ -94,7 +94,7 @@ const confirmUser = (req, res) => {
       const session = generateSessionId();
       req.app.locals.sessions[session] = login;
       res.cookie('sId', session);
-      res.redirect('http://localhost:3000/');
+      res.redirect(process.env.REDIRECTION_URL);
     });
 };
 
