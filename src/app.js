@@ -5,9 +5,9 @@ const fetch = require('node-fetch');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 
-const handlers = require('./src/handlers');
+const handlers = require('./handlers');
 const Db = require('./db');
-const { getDropboxAccessToken } = require('./config');
+const { getDropboxAccessToken } = require('../config');
 
 const app = express();
 const REDIS_URL = process.env.REDIS_URL || 6379;
