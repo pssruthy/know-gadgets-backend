@@ -1,16 +1,25 @@
 const express = require('express');
 const redis = require('redis');
+const { Dropbox } = require('dropbox');
+const fetch = require('node-fetch');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
+
 const handlers = require('./src/handlers');
 const Db = require('./db');
+const { getDropboxAccessToken } = require('./config');
 
 const app = express();
 const REDIS_URL = process.env.REDIS_URL || 6379;
 const redisClient = redis.createClient(REDIS_URL);
 const db = new Db(redisClient);
+const dropbox = new Dropbox({
+  accessToken: getDropboxAccessToken(),
+  fetch: fetch,
+});
 
 app.locals.db = db;
+app.locals.dropbox = dropbox;
 app.locals.sessions = {};
 
 db.getGadgets().then((gadgets) => {
@@ -46,6 +55,7 @@ app.get('/api/getAuthLink', handlers.getAuthLink);
 
 app.use(handlers.authorizeUser);
 
+app.get('/images/:imageName', handlers.getImage);
 app.get('/api/getGadgets', handlers.getGadgets);
 app.get('/api/getGadgetDetails/:id', handlers.getGadgetDetails);
 app.get('/api/getReviews/:id', handlers.getReviews);

@@ -54,25 +54,35 @@ const addReview = (req, res) => {
 
 const addGadget = (req, res) => {
   const details = req.body;
-  const { gadgets, gadgetLastId, reviews } = req.app.locals;
+  const { gadgets, gadgetLastId, reviews, dropbox } = req.app.locals;
   const lastId = gadgetLastId + 1;
 
   const { img } = req.files || { image: {} };
-  const imageName = `image-${lastId}.jpg`;
-  const location = `./public/assets/${imageName}`;
-  img.mv && img.mv(location);
 
-  req.app.locals.gadgetLastId = lastId;
-  gadgets.push({
-    ...details,
-    id: lastId,
-    imgUrl: `/assets/${imageName}`,
-  });
-  reviews[lastId] = [];
-  req.app.locals.db.setGadgetLastId(lastId);
-  req.app.locals.db.setGadgets(gadgets);
-  req.app.locals.db.setReviews(reviews);
-  res.send({ id: lastId });
+  const imageName = `image-${lastId}.jpg`;
+  const options = {
+    path: `/gadgets/${imageName}`,
+    contents: img.data,
+    mode: 'overwrite',
+  };
+  dropbox
+    .filesUpload(options)
+    .then((response) => {
+      req.app.locals.gadgetLastId = lastId;
+      gadgets.push({
+        ...details,
+        id: lastId,
+        imgUrl: `/images/${imageName}`,
+      });
+      reviews[lastId] = [];
+      req.app.locals.db.setGadgetLastId(lastId);
+      req.app.locals.db.setGadgets(gadgets);
+      req.app.locals.db.setReviews(reviews);
+      res.send({ id: lastId });
+    })
+    .catch((err) => {
+      res.send({ status: 'failed' });
+    });
 };
 
 const getAuthLink = (req, res) => {
@@ -124,6 +134,14 @@ const logout = (req, res) => {
   res.end();
 };
 
+const getImage = (req, res) => {
+  const { imageName } = req.params;
+  const { dropbox } = req.app.locals;
+  dropbox.filesDownload({ path: `/gadgets/${imageName}` }).then((image) => {
+    res.send(image.result.fileBinary);
+  });
+};
+
 module.exports = {
   getGadgets,
   getGadgetDetails,
@@ -135,4 +153,5 @@ module.exports = {
   authorizeUser,
   getUser,
   logout,
+  getImage,
 };

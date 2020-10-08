@@ -18,8 +18,13 @@ const getAuthLink = () => {
   return authLink;
 };
 
+const getDropboxAccessToken = () => {
+  return env.DROPBOX_ACCESS_TOKEN;
+};
+
 module.exports = {
   getClientId,
   getClientSecret,
   getAuthLink,
+  getDropboxAccessToken,
 };
